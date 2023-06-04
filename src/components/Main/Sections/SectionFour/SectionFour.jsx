@@ -18,13 +18,16 @@ const [video,setVideo]=useState(false)
 const [previewLoaded, setPreviewLoaded] = useState(false);
 const [videoClicked,setvideoClicked]=useState(false)
 
+//Проверяю Ios ли уст-во 
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+const autoplay = isIOS ? true : false;
 
 useEffect (() => {
   AOS.init({duration: 1000, once: true})
   if (videoRef.current) {
     videoRef.current.currentTime = 2;
   }
-  }, [previewLoaded]);
+  }, []);
     const handleClick = () => {
       // проверяем, играет ли видео, и если да, то останавливаем его
       if (!videoRef.current.paused) {
@@ -77,15 +80,18 @@ useEffect (() => {
                 src={goalmp4}
                 loop
                 muted
-                onEnded={handleVideoEnded}
+                autoPlay={autoplay}
+                // onEnded={handleVideoEnded}
                 onClick={handleClick}
-                controls={false}
-                // autoPlay={true}
+                // controls={false}
                 playsInline
+                
               />
               {playBtn ? (
                 <i onClick={handleClick} class="fa-solid fa-play playbtn"></i>
               ) : null}
+
+              
             </>
         </div>
       </div>
